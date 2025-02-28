@@ -28,3 +28,4 @@ https://raw.githubusercontent.com/Zoy-Johansson/ios_rule_script/refs/heads/maste
 https://raw.githubusercontent.com/Zoy-Johansson/ios_rule_script/refs/heads/master/rule/Surge/Cloudflare/Cloudflare_Resolve_ip.list
 https://raw.githubusercontent.com/Zoy-Johansson/ios_rule_script/refs/heads/master/rule/Surge/ChinaMaxNoIP/ChinaMaxNoIP_All.list
 https://raw.githubusercontent.com/Zoy-Johansson/ios_rule_script/refs/heads/master/rule/Surge/ChinaIPs/ChinaIPs.list
+https://raw.githubusercontent.com/Zoy-Johansson/ios_rule_script/refs/heads/master/source/reject.conf
