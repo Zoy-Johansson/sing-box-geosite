@@ -1,0 +1,25 @@
+name: Delete Contents of Rule Folder
+
+on:
+  workflow_dispatch:
+
+jobs:
+  delete-files:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Remove all contents in rule folder without deleting the folder
+        run: |
+          find rule/ -mindepth 1 -delete
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add rule/
+          git commit -m "Delete all files in rule folder" || echo "No changes to commit"
+          git push origin main
