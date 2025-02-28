@@ -14,6 +14,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Ensure rule folder exists
+        run: |
+          if [ ! -d "rule" ]; then
+            mkdir -p rule
+            echo "Created rule folder."
+          else
+            echo "rule folder exists."
+          fi
+
       - name: "Setup sing-box"
         env:
           SING_BOX_DEB_URL: "https://github.com/SagerNet/sing-box/releases/download/v1.10.0-alpha.27/sing-box_1.10.0-alpha.27_linux_amd64.deb"
