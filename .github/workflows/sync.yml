@@ -49,9 +49,9 @@ jobs:
         run: |
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
-          git add ./rule/*.json
-          git add ./rule/*.srs
-          git add ./rule/*.txt
+          git add ./rule/*.json 2>/dev/null || true
+          git add ./rule/*.srs 2>/dev/null || true
+          git add ./rule/*.txt 2>/dev/null || true
 
           # 检查是否有文件被修改
           if git diff --staged --quiet; then
