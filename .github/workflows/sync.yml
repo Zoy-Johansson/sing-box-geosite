@@ -23,6 +23,15 @@ jobs:
             echo "rule folder exists."
           fi
 
+      - name: Ensure adguard folder exists
+        run: |
+          if [ ! -d "adguard" ]; then
+            mkdir -p adguard
+            echo "Created adguard folder."
+          else
+            echo "adguard folder exists."
+          fi
+
       - name: "Setup sing-box"
         env:
           SING_BOX_DEB_URL: "https://github.com/SagerNet/sing-box/releases/download/v1.10.0-alpha.27/sing-box_1.10.0-alpha.27_linux_amd64.deb"
@@ -41,6 +50,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install pandas requests pyyaml
 
+      - name: Download and convert adguard filter
+        run: |
+          wget -O adguard/filter.txt https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt
+          sing-box rule-set convert --type adguard --output adguard/filter.srs adguard/filter.txt
+
       - name: Run script
         run: python ../main.py
         working-directory: ./rule/
@@ -52,6 +66,7 @@ jobs:
           git add ./rule/*.json 2>/dev/null || true
           git add ./rule/*.srs 2>/dev/null || true
           git add ./rule/*.txt 2>/dev/null || true
+          git add ./adguard/*.srs 2>/dev/null || true
 
           # 检查是否有文件被修改
           if git diff --staged --quiet; then
