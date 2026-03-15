@@ -1,0 +1,51 @@
+{
+  "rules": [
+    {
+      "domain_keyword": [
+        "baozi",
+        "godamanga",
+        "ipleak"
+      ]
+    },
+    {
+      "domain_suffix": [
+        "18comic.org",
+        "18comic.vip",
+        "92hm.top",
+        "baozimh.com",
+        "bilinovel.com",
+        "blbtgg.com",
+        "cocomanga.com",
+        "colamanga.com",
+        "colamanhua.com",
+        "dandanplay.net",
+        "gimytv.vip",
+        "hanime1.me",
+        "happymh.com",
+        "heimuer.tv",
+        "heimuer.xyz",
+        "hhuus.com",
+        "hihimanga.com",
+        "hmrvideo.com",
+        "jmcomic-zzz.me",
+        "jmcomic-zzz.org",
+        "kimivod.com",
+        "libvio.la",
+        "libvio.link",
+        "libvio.me",
+        "linovelib.com",
+        "mangadig.com",
+        "manhuagui.com",
+        "mdlys.vip",
+        "misakaf.org",
+        "olehdtv.com",
+        "olemovienews.com",
+        "olevod.com",
+        "rouman5.com",
+        "szrtcpa.com",
+        "twmanga.com"
+      ]
+    }
+  ],
+  "version": 2
+}
