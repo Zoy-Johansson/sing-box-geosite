@@ -6,7 +6,6 @@ import json
 import requests
 import yaml
 import ipaddress
-import shutil
 from io import StringIO
 
 # 映射字典（已支持 PROCESS-NAME）
@@ -16,27 +15,6 @@ MAP_DICT = {'DOMAIN-SUFFIX': 'domain_suffix', 'HOST-SUFFIX': 'domain_suffix', 'h
             'IP6-CIDR': 'ip_cidr','SRC-IP-CIDR': 'source_ip_cidr', 'GEOIP': 'geoip', 'DST-PORT': 'port',
             'SRC-PORT': 'source_port', "URL-REGEX": "domain_regex", "DOMAIN-REGEX": "domain_regex",
             'PROCESS-NAME': 'process_name'}
-
-# ================== 适配 workflow 的清理逻辑 ==================
-# 因为 workflow 会 cd 到 ./rule/ 再运行 python ../main.py
-# 所以这里我们用 "." 表示当前目录（就是 rule 文件夹）
-rule_dir = "."
-
-if os.path.exists(rule_dir):
-    for filename in os.listdir(rule_dir):
-        file_path = os.path.join(rule_dir, filename)
-        try:
-            if os.path.isfile(file_path) or os.path.islink(file_path):
-                os.unlink(file_path)
-            elif os.path.isdir(file_path):
-                shutil.rmtree(file_path)
-        except Exception as e:
-            print(f"⚠️ 删除失败 {file_path}：{e}")
-    print(f"✅ 已清空 rule 文件夹（当前目录）")
-else:
-    os.makedirs(rule_dir, exist_ok=True)
-    print(f"✅ rule 文件夹已自动创建")
-# ============================================================
 
 def read_yaml_from_url(url):
     headers = {'User-Agent': 'Mozilla/5.0'}
@@ -138,7 +116,6 @@ def parse_list_file(link, output_directory):
         with concurrent.futures.ThreadPoolExecutor() as executor:
             results = list(executor.map(parse_and_convert_to_dataframe, [link]))
             dfs = [df for df, rules in results]
-            rules_list = [rules for df, rules in results]
             df = pd.concat(dfs, ignore_index=True)
         df = df[~df['pattern'].str.contains('#')].reset_index(drop=True)
         df = df[df['pattern'].isin(MAP_DICT.keys())].reset_index(drop=True)
@@ -175,11 +152,11 @@ def parse_list_file(link, output_directory):
         pass
 
 # ====================== 主程序 ======================
-with open("../links.txt", 'r') as links_file:   # ← 保持 ../ 因为 workflow 在 rule/ 目录运行
+with open("../links.txt", 'r') as links_file:
     links = links_file.read().splitlines()
 links = [l for l in links if l.strip() and not l.strip().startswith("#")]
 
-output_dir = "."   # ← 关键修复：输出到当前目录（就是 rule/）
+output_dir = "."   # 当前目录就是 rule/
 
 result_file_names = []
 for link in links:
