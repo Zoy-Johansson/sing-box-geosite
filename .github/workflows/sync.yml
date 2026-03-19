@@ -4,13 +4,13 @@ on:
     branches: [ main ]
   workflow_dispatch:
   schedule:
-    - cron: '0 12 * * *'
+    - cron: '0 12 * * *'   # 每天中午12点（北京时间）强制更新
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4   # 升级到 v4，更稳定
+      - uses: actions/checkout@v4
 
       - name: Ensure rule folder exists
         run: |
@@ -22,11 +22,11 @@ jobs:
           mkdir -p adguard
           echo "adguard folder ready."
 
-      # ================== 新增：强制删除 rule 内所有旧文件 ==================
-      - name: Clean rule folder completely (delete all old files)
+      # ================== 强制清空 rule 文件夹（彻底删除所有旧文件） ==================
+      - name: Clean rule folder completely (delete ALL old files)
         run: |
           rm -rf rule/* 2>/dev/null || true
-          echo "✅ rule 文件夹已彻底清空（所有旧 .json 和 .srs 已删除）"
+          echo "✅ rule 文件夹已彻底清空，所有旧 .json 和 .srs 已删除"
       # =====================================================================
 
       - name: "Setup sing-box"
@@ -52,22 +52,23 @@ jobs:
           wget -O adguard/filter.txt https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt
           sing-box rule-set convert --type adguard --output adguard/filter.srs adguard/filter.txt
 
-      - name: Run script
+      - name: Run script (generate new rules)
         run: python ../main.py
         working-directory: ./rule/
 
-      - name: Commit and push config.json
+      - name: Commit and push (强制提交，即使内容不变)
         run: |
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
+          
           git add ./rule/*.json 2>/dev/null || true
           git add ./rule/*.srs 2>/dev/null || true
           git add ./adguard/*.srs 2>/dev/null || true
           
           if git diff --staged --quiet; then
-            echo "No changes to commit"
-            exit 0
+            echo "No content changed → 使用 --allow-empty 强制提交每日记录"
+            git commit --allow-empty -m "Update rules - $(date '+%Y-%m-%d %H:%M:%S') [daily force commit]"
           else
             git commit -m "Update rules - $(date '+%Y-%m-%d %H:%M:%S')"
-            git push
           fi
+          git push
