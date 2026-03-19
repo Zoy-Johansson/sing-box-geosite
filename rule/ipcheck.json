@@ -1,0 +1,30 @@
+{
+  "rules": [
+    {
+      "domain": [
+        "sub-store.vercel.app"
+      ]
+    },
+    {
+      "domain_suffix": [
+        "api-ipv4.ip.sbg",
+        "flower.yt",
+        "flowercloud.net",
+        "flowercloud.xyz",
+        "ip-api.com",
+        "ip-score.com",
+        "ip.sb",
+        "ip.skk.moe",
+        "ipinfo.io",
+        "ipwhois.app",
+        "jinglongyu.com",
+        "kuromis.com",
+        "mesl.cloud",
+        "nexitally.com",
+        "tagss01.pro",
+        "whoer.net"
+      ]
+    }
+  ],
+  "version": 3
+}
