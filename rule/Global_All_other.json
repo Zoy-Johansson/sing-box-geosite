@@ -33081,7 +33081,12 @@
         "zzux.com",
         "zzycdz.com"
       ]
+    },
+    {
+      "process_name": [
+        "LookupViewService"
+      ]
     }
   ],
-  "version": 2
+  "version": 3
 }

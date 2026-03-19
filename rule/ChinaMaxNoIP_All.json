@@ -118162,7 +118162,23 @@
         "zzzzaaaa.com",
         "zzzzzz.me"
       ]
+    },
+    {
+      "process_name": [
+        "Thunder",
+        "com.bilibili.app.blue",
+        "com.bilibili.app.in",
+        "com.bilibili.comic",
+        "com.bilibili.comic.intl",
+        "com.jjwxc.reader",
+        "com.qiyi.video",
+        "com.taobao.taobao",
+        "com.xiaomi.mibrain.speech",
+        "com.zhiliaoapp.musically",
+        "tv.danmaku.bili",
+        "tv.danmaku.bilibilihd"
+      ]
     }
   ],
-  "version": 2
+  "version": 3
 }

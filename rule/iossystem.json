@@ -25,7 +25,13 @@
         "push-apple.com.akadns.net",
         "push.apple.com"
       ]
+    },
+    {
+      "process_name": [
+        "netbiosd",
+        "trustd"
+      ]
     }
   ],
-  "version": 2
+  "version": 3
 }

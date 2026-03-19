@@ -36,7 +36,16 @@
         "tx.me",
         "usercontent.dev"
       ]
+    },
+    {
+      "process_name": [
+        "nekox.messenger",
+        "org.telegram.messenger",
+        "telegram-desktop",
+        "tw.nekomimi.nekogram",
+        "xyz.nextalone.nagram"
+      ]
     }
   ],
-  "version": 2
+  "version": 3
 }

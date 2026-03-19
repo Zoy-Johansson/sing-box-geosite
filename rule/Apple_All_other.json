@@ -1578,7 +1578,24 @@
         "xn--ruq8a011kt6y.xn--hxt814e",
         "yourmonsterbeats.com"
       ]
+    },
+    {
+      "process_name": [
+        "CoreLocationAgent",
+        "LookupViewService",
+        "Music",
+        "TV",
+        "WeatherWidget",
+        "apsd",
+        "com.apple.Maps",
+        "com.apple.geod",
+        "findmydevice-user-agent",
+        "fmfd",
+        "mapspushd",
+        "netbiosd",
+        "trustd"
+      ]
     }
   ],
-  "version": 2
+  "version": 3
 }

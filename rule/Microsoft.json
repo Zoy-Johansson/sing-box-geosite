@@ -679,7 +679,13 @@
         "yammer.com",
         "yammerusercontent.com"
       ]
+    },
+    {
+      "process_name": [
+        "OneDrive",
+        "OneDriveUpdater"
+      ]
     }
   ],
-  "version": 2
+  "version": 3
 }

@@ -708,7 +708,16 @@
         "zukunftswerkstatt.de",
         "zynamics.com"
       ]
+    },
+    {
+      "process_name": [
+        "BackupandSync",
+        "com.android.vending",
+        "com.google.android.gms",
+        "com.google.android.gsf",
+        "com.google.android.play.games"
+      ]
     }
   ],
-  "version": 2
+  "version": 3
 }
