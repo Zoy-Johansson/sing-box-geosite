@@ -27,4 +27,4 @@ https://raw.githubusercontent.com/Zoy-Johansson/ios_rule_script/refs/heads/maste
 https://raw.githubusercontent.com/Zoy-Johansson/ios_rule_script/refs/heads/master/source/reject_clash.txt
 https://raw.githubusercontent.com/Zoy-Johansson/ios_rule_script/refs/heads/master/source/manga.list
 https://raw.githubusercontent.com/Zoy-Johansson/ios_rule_script/refs/heads/master/source/needreject.list
-
+https://raw.githubusercontent.com/Zoy-Johansson/ios_rule_script/refs/heads/master/source/ipcheck.list
