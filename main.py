@@ -6,7 +6,7 @@ import json
 import requests
 import yaml
 import ipaddress
-import shutil                          # ← 新增：用于彻底删除文件夹内容
+import shutil
 from io import StringIO
 
 # 映射字典（已支持 PROCESS-NAME）
@@ -17,8 +17,10 @@ MAP_DICT = {'DOMAIN-SUFFIX': 'domain_suffix', 'HOST-SUFFIX': 'domain_suffix', 'h
             'SRC-PORT': 'source_port', "URL-REGEX": "domain_regex", "DOMAIN-REGEX": "domain_regex",
             'PROCESS-NAME': 'process_name'}
 
-# ================== 新增：每次运行前自动清空并重建 rule 文件夹 ==================
-rule_dir = "./rule"                    # 所有生成的 .json 和 .srs 都会放在这里
+# ================== 适配 workflow 的清理逻辑 ==================
+# 因为 workflow 会 cd 到 ./rule/ 再运行 python ../main.py
+# 所以这里我们用 "." 表示当前目录（就是 rule 文件夹）
+rule_dir = "."
 
 if os.path.exists(rule_dir):
     for filename in os.listdir(rule_dir):
@@ -30,10 +32,10 @@ if os.path.exists(rule_dir):
                 shutil.rmtree(file_path)
         except Exception as e:
             print(f"⚠️ 删除失败 {file_path}：{e}")
-    print(f"✅ 已清空 rule 文件夹 → {rule_dir}")
+    print(f"✅ 已清空 rule 文件夹（当前目录）")
 else:
     os.makedirs(rule_dir, exist_ok=True)
-    print(f"✅ rule 文件夹不存在，已自动创建 → {rule_dir}")
+    print(f"✅ rule 文件夹已自动创建")
 # ============================================================
 
 def read_yaml_from_url(url):
@@ -173,15 +175,15 @@ def parse_list_file(link, output_directory):
         pass
 
 # ====================== 主程序 ======================
-with open("../links.txt", 'r') as links_file:
+with open("../links.txt", 'r') as links_file:   # ← 保持 ../ 因为 workflow 在 rule/ 目录运行
     links = links_file.read().splitlines()
 links = [l for l in links if l.strip() and not l.strip().startswith("#")]
 
-output_dir = "./rule"                  # ← 已改为输出到 rule 文件夹
+output_dir = "."   # ← 关键修复：输出到当前目录（就是 rule/）
 
 result_file_names = []
 for link in links:
     result_file_name = parse_list_file(link, output_directory=output_dir)
     result_file_names.append(result_file_name)
 
-print(f"\n🎉 全部处理完成！共生成 {len(result_file_names)} 个规则集（已存入 {output_dir} 文件夹）")
+print(f"\n🎉 全部处理完成！共生成 {len(result_file_names)} 个规则集（已存入 rule 文件夹）")
