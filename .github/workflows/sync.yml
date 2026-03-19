@@ -1,5 +1,4 @@
 name: Config Update
-
 on:
   push:
     branches: [ main ]
@@ -10,27 +9,25 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4   # 升级到 v4，更稳定
 
       - name: Ensure rule folder exists
         run: |
-          if [ ! -d "rule" ]; then
-            mkdir -p rule
-            echo "Created rule folder."
-          else
-            echo "rule folder exists."
-          fi
+          mkdir -p rule
+          echo "rule folder ready."
 
       - name: Ensure adguard folder exists
         run: |
-          if [ ! -d "adguard" ]; then
-            mkdir -p adguard
-            echo "Created adguard folder."
-          else
-            echo "adguard folder exists."
-          fi
+          mkdir -p adguard
+          echo "adguard folder ready."
+
+      # ================== 新增：强制删除 rule 内所有旧文件 ==================
+      - name: Clean rule folder completely (delete all old files)
+        run: |
+          rm -rf rule/* 2>/dev/null || true
+          echo "✅ rule 文件夹已彻底清空（所有旧 .json 和 .srs 已删除）"
+      # =====================================================================
 
       - name: "Setup sing-box"
         env:
@@ -41,7 +38,7 @@ jobs:
           sudo dpkg -i sing-box.deb
 
       - name: Set up Python3
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: 3.x
 
@@ -65,14 +62,12 @@ jobs:
           git config --global user.name "GitHub Action"
           git add ./rule/*.json 2>/dev/null || true
           git add ./rule/*.srs 2>/dev/null || true
-          git add ./rule/*.txt 2>/dev/null || true
           git add ./adguard/*.srs 2>/dev/null || true
-
-          # 检查是否有文件被修改
+          
           if git diff --staged --quiet; then
             echo "No changes to commit"
             exit 0
           else
-            git commit -m "Update rules"
+            git commit -m "Update rules - $(date '+%Y-%m-%d %H:%M:%S')"
             git push
           fi
